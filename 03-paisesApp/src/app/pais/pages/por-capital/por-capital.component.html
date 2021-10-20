@@ -1,0 +1,16 @@
+<h2>Por Capital</h2>
+<hr>
+<div class="row animate__rubberBand animate__animated">
+    <div class="col">
+      <app-pais-input  [dependiendo]="dependiendo" (onEnter)="buscar($event)" (onDebounce)="sugerencia($event)"></app-pais-input>
+    </div>
+</div>
+<hr>
+<div class="alert alert-danger" *ngIf="hayError">
+    No se encontro nada con el termino ABSC
+</div>
+<div class="row" *ngIf="paises.length > 0">
+    <div class="col">
+       <app-pais-tabla [paises]="paises" ></app-pais-tabla>
+    </div>
+</div>
