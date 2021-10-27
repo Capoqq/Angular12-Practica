@@ -1,5 +1,11 @@
-<h1>
+<h1 *ngIf="!heroe.id">
     Nuevo Heroe
+    <small>{{heroe.superhero}}</small>
+</h1>
+<h1 *ngIf="heroe.id">
+    Editar Heroe
+    <br>
+    <small>{{heroe.superhero}}</small>
 </h1>
 <form [formGroup]="formulario" fxLayout="row" fxLayout.xs="column" fxLayoutGap="40px">
         <div fxFlex="50" fxLayout="column">
@@ -35,9 +41,13 @@
             <br>
             <div fxLayout>
 
-                <button color="primary" [disabled]="!formulario.valid" (click)="guardarHeroe()" mat-raised-button type="button">
+                <button *ngIf="!heroe.id" color="primary" [disabled]="!formulario.valid" (click)="guardarHeroe()" mat-raised-button type="button">
                     <mat-icon>edit</mat-icon>
                     Guardar
+                </button> 
+                <button *ngIf="heroe.id" [disabled]="!formulario.valid" (click)="guardarHeroe()" mat-raised-button type="button">
+                    <mat-icon>edit</mat-icon>
+                    Editar
                 </button> 
                     <span class="spacer"></span>
                     <button (click)="eliminarHeroe()" *ngIf="heroe.id" color="warn" mat-raised-button>

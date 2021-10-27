@@ -1,0 +1,89 @@
+<h2>
+    Template: <small>Switches</small> 
+</h2>
+
+<form #miFormulario="ngForm" action="">
+    <!-- Radios -->
+    <div class="row mb-3">
+        <label for="" class="col-sm-3 col-form-label">Genero</label>
+        <div class="col-sm-9">
+            <div class="form-check">
+                <input class="form-check-input" required value="M" type="radio" [(ngModel)]="persona.genero" name="radioGenero" id="radioMasculino">
+                <label class="form-check-label" for="radioMasculino">
+                  Masculino
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" required value="F" [(ngModel)]="persona.genero" type="radio" name="radioGenero" id="radioFemenino">
+                <label class="form-check-label" for="radioFemenino">
+                 Femenino
+                </label>
+              </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="" class="col-sm-3 col-form-label">Genero</label>
+        <div class="col-sm-9">
+          <div class="form-check">
+            <input class="form-check-input" name="terminos" [(ngModel)]="terminosYCondiciones" type="checkbox" value="" id="flexCheckDefault" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              Terminos y condiciones de uso
+            </label>
+          </div>
+         
+        </div>
+    </div>
+
+    <div class="row mb-3">
+      <label for="" class="col-sm-3 col-form-label">Notificaciiones</label>
+      <div class="form-check form-switch mt-2">
+        <input class="form-check-input" name="notificaciones" [(ngModel)]="persona.notificaciones" type="checkbox" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Quiero recibir notificaciones</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button [disabled]="!miFormulario.valid" class="btn btn-primary float-end">
+          Guardar
+        </button>
+      </div>
+    </div>
+</form>
+
+
+<h5>
+  Valor del formulario
+</h5>
+<pre>
+  {{miFormulario.value | json}}
+</pre>
+<br>
+
+<h5>
+  Personas
+</h5>
+<pre>
+  {{persona | json}}
+</pre>
+<br>
+
+
+<h5>
+ Terminos
+</h5>
+<pre>
+  {{miFormulario.controls?.terminos?.errors | json}}
+</pre>
+<br>
+
+
+
+
+<h5>Valid</h5>
+<pre>
+  {{miFormulario.valid }}
+</pre>
+<br>
+<pre>
+  Condiciones: 
+</pre>

@@ -4,6 +4,9 @@ import { FormControl, FormGroup,Validators } from '@angular/forms';
 import { HeroesService } from '../../services/heroes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {switchMap} from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmarComponent } from '../../components/confirmar/confirmar.component';
 
 @Component({
   selector: 'app-agregar',
@@ -45,7 +48,7 @@ export class AgregarComponent implements OnInit {
     alt_img:''
   }
   
-  constructor(private heroesService:HeroesService, private activateRouter:ActivatedRoute, public router:Router) { 
+  constructor(private heroesService:HeroesService, private activateRouter:ActivatedRoute, public router:Router, private snakbar:MatSnackBar, public dialog:MatDialog) { 
   }
 
   ngOnInit(): void {
@@ -81,6 +84,7 @@ export class AgregarComponent implements OnInit {
        }
       this.heroesService.editarHeroe(this.heroe).subscribe(resp =>{
         console.log('Actualizando',resp)
+        this.mostrarSnarbar('Heroe Actualizado')
       })
     } else{
       //Crear
@@ -94,13 +98,27 @@ export class AgregarComponent implements OnInit {
       }
       console.log(this.heroe.id)
        this.heroesService.agregarHeroe(this.heroe).subscribe(heroe =>{
+        this.mostrarSnarbar('Heroe Creado')
          this.router.navigate(['/heroes/editar',heroe.id]);
        })
     }
   }
   eliminarHeroe(){
-    this.heroesService.eliminarHeroe(this.heroe.id).subscribe(resp =>{
-      this.router.navigate(['/heroes'])
-    })
+ const dialog = this.dialog.open(ConfirmarComponent, {
+    width:'250px',
+    data: {...this.heroe}
+  });
+  dialog.afterClosed().subscribe((res)=>{
+    if(res){
+      this.heroesService.eliminarHeroe(this.heroe.id).subscribe(resp =>{
+        this.router.navigate(['/heroes'])
+      })
+    }
+  })
+  }
+  mostrarSnarbar(mensaje:string){
+    this.snakbar.open(mensaje,'Cerrar',{
+      duration:2500
+    });
   }
 }
